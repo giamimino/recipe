@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 export default function ForYouLoading() {
   let length = 14
-  if(window.innerWidth <= 768) {
-    length = 8
-  }
+  useEffect(() => {
+    if(window.innerWidth <= 768) {
+      length = 8
+    }
+  }, [])
   const placeholder = Array.from({ length })
   return (
     <div className='flex flex-wrap gap-4 p-8 justify-center'>

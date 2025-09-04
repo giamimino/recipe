@@ -2,7 +2,16 @@
 
 type SearchProps = {
   onChange: (value: string) => void,
-  value: string
+  value: string,
+  requestSearch: (value: string) => void,
+}
+
+type MealComProps = {
+  title: string,
+  thumb: string,
+  category: string,
+  redirect: (title: string) => void,
+  code: string
 }
 
 type Meal = {

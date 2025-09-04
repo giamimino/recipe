@@ -1,8 +1,10 @@
 "use client";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const router = useRouter()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,10 +31,10 @@ export default function Header() {
         "bg-white px-8 text-black"
       }`}
     >
-      <div className="cursor-pointer hover:underline">Home</div>
-      <div className="cursor-pointer hover:underline">All Recipie</div>
-      <div className="cursor-pointer hover:underline">Contact</div>
-      <div className="cursor-pointer hover:underline">Profile</div>
+      <div className="cursor-pointer hover:underline" onClick={() => router.push("/")}>Home</div>
+      <div className="cursor-pointer hover:underline" onClick={() => router.push("/all")}>All Recipie</div>
+      <div className="cursor-pointer hover:underline" onClick={() => router.push("/")}>Contact</div>
+      <div className="cursor-pointer hover:underline" onClick={() => router.push("/")}>Profile</div>
     </div>
   );
 }

@@ -2,17 +2,17 @@ import React from 'react'
 
 type PageProps = {
   params: {
-    category: string,
     meal: string,
+    category: string
   }
 }
 
 export default function MealPage({ params }: PageProps) {
-  const  { category, meal } = params
+  const  { meal, category } = params
 
   return (
-    <div>
-      <h1>Category: {category}</h1>
+    <div className='flex flex-col pt-20'>
+      <h2>Category: {category}</h2>
       <h2>Meal: {meal}</h2>
     </div>
   )

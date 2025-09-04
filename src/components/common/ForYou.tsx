@@ -6,19 +6,24 @@ import ForYouLoading from '../ui/loading/ForYouLoading';
 export default function ForYou() {
   const [meals, setMeals] = useState<Meal[]>([]);
   const [loading, setLoading] = useState(true);
-
+  let length = 21
+  if(window.innerWidth <= 768) {
+    length = 12
+  }
   useEffect(() => {
-    let length = 21
-    if(window.innerWidth <= 768) {
-      length = 12
-    }
       setLoading(true);
-      fetch('/getRandomMeal')
-        .then(res => res.json())
-        .then(data => 
-          setMeals(data.meals);          
-        )
-      setLoading(false);
+      const fetchData = async () => {
+        const requests = Array.from({ length }, () =>
+          fetch('https://www.themealdb.com/api/json/v1/1/random.php')
+            .then(res => res.json())
+            .then(data => data.meals[0])
+        );
+ 
+       const results = await Promise.all(requests);
+       setMeals(results)
+       setLoading(false);
+      }
+      fetchData();
   }, []);
 
   if (loading) return <ForYouLoading />;
@@ -28,8 +33,7 @@ export default function ForYou() {
         <div
           key={`${meal.idMeal}-${index}`}
           className={`flex flex-col gap-2.5 items-center justify-center border-1 border-black
-          p-2 rounded-md select-none w-50 max-[500px]:w-35 animate-fade-up`}
-          style={{ animationDelay: `${index * 100}ms` }}
+          p-2 rounded-md select-none w-50 max-[500px]:w-35`}
         >
           <Image
             src={`${meal.strMealThumb}/small`}
