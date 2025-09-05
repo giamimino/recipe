@@ -6,6 +6,18 @@ type SearchProps = {
   requestSearch: (value: string) => void,
 }
 
+type CategoryComProps = {
+  title: string,
+  thumb: string,
+  onSelect: (value: string) => void,
+  isSelected: boolean
+}
+
+type MealCategory = {
+  strCategory: string,
+  strCategoryThumb: string,
+}
+
 type MealComProps = {
   title: string,
   thumb: string,

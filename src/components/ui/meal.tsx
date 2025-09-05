@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 
-export default function Meal(props: MealComProps) {
+function Meal(props: MealComProps) {
   return (
       <div
         className={`flex flex-col gap-2.5 items-center justify-center border-1 border-black
@@ -16,9 +16,11 @@ export default function Meal(props: MealComProps) {
           priority
         />
         <h1 
-        onClick={() => props.redirect(`/meal/${props.category}/${props.code}-${props.title.replace(" ", "-")}`)} 
+        onClick={() => props.redirect(`/meal/${props.category.toLowerCase()}/${props.code}-${props.title.replace(" ", "-").toLowerCase()}`)} 
         className='cursor-pointer hover:text-amber-500 text-center truncate w-full'>
           {props.title}</h1>
       </div>
   )
 }
+
+export default React.memo(Meal)
