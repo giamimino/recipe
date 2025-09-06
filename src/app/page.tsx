@@ -1,9 +1,9 @@
 'use client'
+import HomeCategory from "@/components/common/HomeCategory";
 import Search from "@/components/ui/search";
 import { useDebounce } from "@/hooks/useDebounce";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-// import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
 const ForYou = dynamic(() => import("@/components/common/ForYou"), {
   ssr: false
@@ -38,6 +38,10 @@ export default function Home() {
       <main>
         <h1 className="text-center text-2xl font-semibold">For You</h1>
         <ForYou />
+      </main>
+      <main>
+        <h1 className="text-center text-2xl font-semibold">Browse by Category</h1>
+        <HomeCategory />
       </main>
     </div>
   );

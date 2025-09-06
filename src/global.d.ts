@@ -22,7 +22,7 @@ type MealComProps = {
   title: string,
   thumb: string,
   category: string,
-  redirect: (title: string) => void,
+  redirect: (url: string) => void,
   code: string
 }
 

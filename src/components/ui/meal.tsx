@@ -16,7 +16,7 @@ function Meal(props: MealComProps) {
           priority
         />
         <h1 
-        onClick={() => props.redirect(`/meal/${props.category.toLowerCase()}/${props.code}-${props.title.replace(" ", "-").toLowerCase()}`)} 
+        onClick={() => props.redirect(`/meal/${props.category.toLowerCase()}/${props.code}-${props.title}`)} 
         className='cursor-pointer hover:text-amber-500 text-center truncate w-full'>
           {props.title}</h1>
       </div>
