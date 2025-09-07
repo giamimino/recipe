@@ -11,7 +11,7 @@ function Meal(props: MealComProps) {
           src={`${props.thumb}/small`}
           alt={props.title}
           width={150}
-          height={300}
+          height={150}
           className='rounded-xl object-cover'
           priority
         />

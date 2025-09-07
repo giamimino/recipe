@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: [new URL('https://www.themealdb.com/**')],
+    remotePatterns: [new URL('https://www.themealdb.com/**'), new URL('https://flagsapi.com/**')],
   },
 };
 

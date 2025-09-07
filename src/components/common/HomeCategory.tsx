@@ -49,7 +49,7 @@ export default function HomeCategory() {
           key={c.strCategory}
           title={c.strCategory}
           thumb={c.strCategoryThumb}
-          onSelect={(value: string) => router.push(`/category/${value.replace(" ", "-").toLowerCase()}`)}
+          onSelect={(value: string) => router.push(`/meal/${value.replace(" ", "-").toLowerCase()}`)}
           isSelected={false}
         />
       ))}

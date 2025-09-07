@@ -28,7 +28,7 @@ export default function Home() {
     <div className="flex flex-col gap-16">
       <div className="mt-[10vh] w-full flex items-center relative
       flex-col gap-2">
-        <h1 className="">Search for any recepie</h1>
+        <h1>Search for any recepie</h1>
         <Search 
           onChange={(value: string) => setSearchValue(value)}
           value={searchValue}
