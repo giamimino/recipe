@@ -7,11 +7,6 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import Meal from '@/components/ui/meal'
 import Category from '@/components/ui/category'
 
-
-type FilterType = {
-  
-}
-
 export default function All() {
   const [meals, setMeals] = useState<Meal[]>([])
   const [loading, setLoading] = useState(true)
@@ -144,12 +139,20 @@ export default function All() {
                 hover:text-black'>show More
               </button>
               {visibleCount > 21 && (
-                <button 
-                  onClick={() => setVisibleCount(21)}
-                  className='text-center text-black/70 text-base font-medium underline cursor-pointer
+                <>
+                  <button 
+                    onClick={() => setVisibleCount(21)}
+                    className='text-center text-black/70 text-base font-medium underline cursor-pointer
+                    transition-all duration-200
+                    hover:text-black'>show less
+                  </button>
+                  <button 
+                  onClick={() => {setVisibleCount(304); setLoading(true)}}
+                  className='text-center text-black/90 text-base font-medium underline cursor-pointer
                   transition-all duration-200
-                  hover:text-black'>show less
+                  hover:text-black'>show all
                 </button>
+                </>
               )}
             </div>
           </div>
