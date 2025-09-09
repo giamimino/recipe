@@ -11,6 +11,10 @@ export async function GET() {
   try {
     const session = await auth()
 
+    if(!session) {
+      return NextResponse.json(null)
+    }
+
     return NextResponse.json(session?.user)
   } catch (err) {
     console.error('Failed to get session:', err)

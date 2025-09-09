@@ -1,11 +1,10 @@
 "use server"
-import { signOut } from "next-auth/react"
-import { signIn } from "../auth"
+import { signIn, signOut } from "../auth"
 
-export const login = async () => {
-  await signIn("github", { redirectTo: "/profile" })
+export const login = async (provider: string) => {
+  await signIn(provider, { redirectTo: "/profile" })
 }
 
 export const logout = async () => {
-  await signOut({ redirectTo: "/profile" })
+  await signOut({ redirectTo: "/" })
 }

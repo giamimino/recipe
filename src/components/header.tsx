@@ -1,9 +1,11 @@
 "use client";
+import { SessionContext } from "@/context/SessionContext";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const session = useContext(SessionContext)
   const router = useRouter()
 
   useEffect(() => {
@@ -34,7 +36,7 @@ export default function Header() {
       <div className="cursor-pointer hover:underline" onClick={() => router.push("/")}>Home</div>
       <div className="cursor-pointer hover:underline" onClick={() => router.push("/all")}>All Recipie</div>
       <div className="cursor-pointer hover:underline" onClick={() => router.push("/")}>Contact</div>
-      <div className="cursor-pointer hover:underline" onClick={() => router.push("/")}>Profile</div>
+      <div className="cursor-pointer hover:underline" onClick={() => router.push(`${session !== null ? "/authentication" : "/profile"}`)}>Profile</div>
     </div>
   );
 }
