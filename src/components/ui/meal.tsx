@@ -13,7 +13,6 @@ function Meal(props: MealComProps) {
           width={150}
           height={150}
           className='rounded-xl object-cover'
-          priority
         />
         <h1 
         onClick={() => props.redirect(`/meal/${props.category.toLowerCase()}/${props.code}-${props.title}`)} 

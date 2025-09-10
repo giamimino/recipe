@@ -1,9 +1,12 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { countries } from "country-data";
 import Ingredient from "@/components/ui/Ingredient";
 import Link from "next/link";
+import { Icon } from "@iconify/react";
+import { SessionContext } from "@/context/SessionContext";
+import { removeSaveMeal, saveMeal } from "@/lib/actions/actions";
 
 type PageProps = {
   params: Promise<{
@@ -18,7 +21,10 @@ type IngredientsType = {
 }
 export default function MealPage({ params }: PageProps) {
   const { meal, category } = React.use(params);
+  const session = useContext(SessionContext);
   const [data, setData] = useState<Meal>();
+  const [savesQTY, setSavesQTY] = useState(0)
+  const [isSaved, setIsSaved] = useState(false)
 
   useEffect(() => {
     fetch(
@@ -98,6 +104,46 @@ export default function MealPage({ params }: PageProps) {
     }
   }, [data])
 
+  useEffect(() => {
+    setSavesQTY(() => {
+      let newSavesQTY = new Set(session?.saves?.filter(
+        (s) => s?.meal && data?.strMeal && s.meal.toLowerCase() === data?.strMeal.toLowerCase()
+      ).map((s) => s.id)).size
+      return newSavesQTY
+    })
+    setIsSaved(() => {
+      let newIsSaved = session?.saves?.some(
+        (s) => s?.meal && data?.strMeal && s.meal.toLowerCase() === data.strMeal.toLowerCase()
+      ) ?? false
+
+      return newIsSaved
+    })
+  }, [session])
+ 
+
+  const handleSave = async () => {;
+    // @ts-ignore
+    const result = await saveMeal(session.id, data.idMeal, data?.strMeal);
+
+    if(result.success) {
+      const url = new URL(window.location.href)
+      url.searchParams.set("meal", JSON.stringify(result.saved))
+      window.history.replaceState({}, "", url)
+    } else {
+      alert(result.message || "Something went wrong.");
+    }
+  };
+
+  const handleRemove = async () => {;
+    const result = await removeSaveMeal(session?.saves?.find((s) => s.meal.toLowerCase() === data?.strMeal.toLowerCase())?.id || "");
+
+    if(result.success) {
+    } else {
+      alert(result.message || "Something went wrong.");
+    }
+  };
+
+
   if (!data)
     return (
       <div className="flex flex-col p-16 font-medium">
@@ -122,6 +168,13 @@ export default function MealPage({ params }: PageProps) {
             <p className="opacity-70 text-black text-sm mt-auto">
               {data.strCategory}
             </p>
+          </div>
+          <div className="flex gap-1 items-center">
+            <span>{savesQTY}</span>
+              <Icon icon={isSaved ? "mdi:heart" : "mdi:heart-outline"} 
+              className={`${isSaved ? "text-red-600" : "text-black"} cursor-pointer`}
+              onClick={() => isSaved ? handleRemove() : handleSave()}
+              />
           </div>
           <div className="flex gap-2.5 flex-wrap">
             {data.strTags &&

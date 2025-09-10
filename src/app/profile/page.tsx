@@ -2,6 +2,7 @@
 import TextLoading from '@/components/ui/loading/TextLoading'
 import SignOutButton from '@/components/ui/sign-out-button'
 import { SessionContext } from '@/context/SessionContext'
+import Image from 'next/image'
 import React, { useContext } from 'react'
 
 export default function Profile() {
@@ -12,6 +13,15 @@ export default function Profile() {
         {session?.name ? (
           <p>{session.name}</p>
         ) : <TextLoading />}
+      </div>
+      <div>
+        {session?.image && <Image
+          src={session?.image}
+          alt={session?.name ?? "avatar"}
+          width={32}
+          height={32}
+          priority
+        />}
       </div>
       <SignOutButton />
     </div>
