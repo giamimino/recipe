@@ -103,32 +103,34 @@ export default function MealPage({ params }: PageProps) {
       return null
     }
   }, [data])
+  
+  const fetchSaves = async (m: string, c: string) => {
+    const res = await fetch("/api/savedCount", {
+      method: "POST",
+      headers: {"Content-Type": "Application/json"},
+      body: JSON.stringify({ meal: m, mealCode: c})
+    });
+    const data = await res.json()
+    if(data.success) {
+      setSavesQTY(data.count ?? 0)
+    } else {
+      setSavesQTY(0)
+    }
+  }
 
   useEffect(() => {
-    if(!session && !data) return;
-    const fetchSaves = async (m: string, c: string) => {
-      const res = await fetch("/api/savedCount", {
-        method: "POST",
-        headers: {"Content-Type": "Application/json"},
-        body: JSON.stringify({ meal: m, mealCode: c})
-      });
-      const data = await res.json()
-      if(data.success) {
-        setSavesQTY(data.count)
-        console.log(data);
-      }
-        console.log(data);
-    }
-    // @ts-ignore
+    if(!session || !data) return;
     fetchSaves(data?.strMeal, data?.idMeal)
-    setIsSaved(() => {
-      let newIsSaved = session?.saves?.some(
-        (s) => s?.meal && data?.strMeal && s.meal.toLowerCase() === data.strMeal.toLowerCase()
-      ) ?? false
+  }, [session, data])
 
-      return newIsSaved
-    })
-  }, [session])
+  useEffect(() => {
+    if (!session || !data) return;
+
+    const hasSaved = session.saves?.some(
+      (s) => s?.meal && s.meal.toLowerCase() === data.strMeal.toLowerCase()
+    ) ?? false;
+    setIsSaved(hasSaved);
+  }, [session, data])
  
 
   const handleSave = async () => {;
@@ -144,7 +146,7 @@ export default function MealPage({ params }: PageProps) {
     }
   };
 
-  const handleRemove = async () => {;
+  const handleRemove = async () => {
     const result = await removeSaveMeal(session?.saves?.find((s) => s.meal.toLowerCase() === data?.strMeal.toLowerCase())?.id || "");
 
     if(result.success && result.id) {
