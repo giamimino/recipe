@@ -105,12 +105,22 @@ export default function MealPage({ params }: PageProps) {
   }, [data])
 
   useEffect(() => {
-    setSavesQTY(() => {
-      let newSavesQTY = new Set(session?.saves?.filter(
-        (s) => s?.meal && data?.strMeal && s.meal.toLowerCase() === data?.strMeal.toLowerCase()
-      ).map((s) => s.id)).size
-      return newSavesQTY
-    })
+    if(!session && !data) return;
+    const fetchSaves = async (m: string, c: string) => {
+      const res = await fetch("/api/savedCount", {
+        method: "POST",
+        headers: {"Content-Type": "Application/json"},
+        body: JSON.stringify({ meal: m, mealCode: c})
+      });
+      const data = await res.json()
+      if(data.success) {
+        setSavesQTY(data.count)
+        console.log(data);
+      }
+        console.log(data);
+    }
+    // @ts-ignore
+    fetchSaves(data?.strMeal, data?.idMeal)
     setIsSaved(() => {
       let newIsSaved = session?.saves?.some(
         (s) => s?.meal && data?.strMeal && s.meal.toLowerCase() === data.strMeal.toLowerCase()
@@ -137,7 +147,10 @@ export default function MealPage({ params }: PageProps) {
   const handleRemove = async () => {;
     const result = await removeSaveMeal(session?.saves?.find((s) => s.meal.toLowerCase() === data?.strMeal.toLowerCase())?.id || "");
 
-    if(result.success) {
+    if(result.success && result.id) {
+      const url = new URL(window.location.href)
+      url.searchParams.set("del", result.id.id)
+      window.history.replaceState({}, "", url)
     } else {
       alert(result.message || "Something went wrong.");
     }

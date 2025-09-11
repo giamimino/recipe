@@ -52,7 +52,7 @@ export async function removeSaveMeal(mealId: string) {
 
     return {
       success: true,
-      saved
+      id: saved
     }
   } catch (err) {
     console.log(err);
