@@ -7,13 +7,16 @@ export interface Session {
   name: string,
   email: string,
   image: string,
-  saves?: Save[] | null
+  emailVerified: Date,
+  saves?: Save[] | null,
 }
 
 type Save = {
   id: string,
   code: string,
   meal: string,
+  thumb: string,
+  category: string,
 }
 
 export async function GET() {
@@ -26,11 +29,14 @@ export async function GET() {
     let saves = await prisma.user.findUnique({
       where: { id: session.user?.id },
       select: {
+        emailVerified: true,
         saves: {
           select: {
             id: true,
             code: true,
-            meal: true
+            meal: true,
+            thumb: true,
+            category: true,
           }
         }
       }
@@ -39,6 +45,7 @@ export async function GET() {
     return NextResponse.json({
       ...session.user,
       id: session.user?.id,
+      emailVerified: saves?.emailVerified,
       saves: saves?.saves ?? [],
     })
   } catch (err) {

@@ -25,7 +25,7 @@ export default function SessionProvider({
   }, []);
 
   useEffect(() => {
-    if(pathname.startsWith("/meal/")) {
+    if(pathname.startsWith("/meal/") || pathname.startsWith("/profile")) {
       const meal = searchParams.get("meal")
       const del = searchParams.get("del")
       if(meal) {

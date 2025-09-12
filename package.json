@@ -12,6 +12,7 @@
     "@auth/prisma-adapter": "^2.10.0",
     "@iconify/react": "^6.0.1",
     "@prisma/client": "^6.15.0",
+    "@react-email/render": "^1.2.3",
     "clsx": "^2.1.1",
     "country-data": "^0.0.31",
     "country-list": "^2.4.1",
@@ -21,7 +22,8 @@
     "prisma": "^6.15.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "react-player": "^3.3.2"
+    "react-player": "^3.3.2",
+    "resend": "^6.0.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

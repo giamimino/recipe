@@ -21,7 +21,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   },
   callbacks: {
     async session({ session, token }) {
-      // token.sub contains the user's ID
       return {
         ...session,
         user: {

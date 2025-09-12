@@ -1,11 +1,12 @@
-"use server"
+"use client"
 import { auth } from '@/lib/auth'
+import send from '@/lib/send';
 
-export default async function HWWwddad() {
-  const session = await auth()
-  console.log(session);
+export default function HWWwddad() {
   
   return (
-    <div>HWWwddad</div>
+    <div className='mt-100'>HWWwddad
+      <button onClick={() => send("devbytesyt@gmail.com")}>send</button>
+    </div>
   )
 }
