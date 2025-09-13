@@ -26,7 +26,7 @@ export async function GET() {
     if(!session) {
       return NextResponse.json(null)
     }
-    let saves = await prisma.user.findUnique({
+    const saves = await prisma.user.findUnique({
       where: { id: session.user?.id },
       select: {
         emailVerified: true,

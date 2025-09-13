@@ -6,7 +6,7 @@ import Ingredient from "@/components/ui/Ingredient";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
 import { SessionContext } from "@/context/SessionContext";
-import { removeSaveMeal, saveMeal } from "@/lib/actions/actions";
+import { ActionMeal, removeSaveMeal, saveMeal } from "@/lib/actions/actions";
 
 type PageProps = {
   params: Promise<{
@@ -20,7 +20,7 @@ type IngredientsType = {
   measure: string
 }
 export default function MealPage({ params }: PageProps) {
-  const { meal, category } = React.use(params);
+  const { meal } = React.use(params);
   const session = useContext(SessionContext);
   const [data, setData] = useState<Meal>();
   const [savesQTY, setSavesQTY] = useState(0)
@@ -34,11 +34,11 @@ export default function MealPage({ params }: PageProps) {
     )
       .then((res) => res.json())
       .then((data) => setData(data.meals[0]));
-  }, []);
+  }, [meal]);
 
   const allIngredients = useMemo(() => {
     if (!data) return;
-    let ingredients: IngredientsType[] = []
+    const ingredients: IngredientsType[] = []
 
     for(let i = 1; i < 20; i++) {
       const ingredient = data[`strIngredient${i}` as keyof typeof data] as string | null;
@@ -133,13 +133,20 @@ export default function MealPage({ params }: PageProps) {
   }, [session, data])
  
 
-  const handleSave = async () => {;
-    // @ts-ignore
-    const result = await saveMeal(session.id, data.idMeal, data?.strMeal);
+  const handleSave = async () => {
+    if (!data || !session?.id) return;
+
+    const actionMeal: ActionMeal = {
+      code: data.idMeal,
+      meal: data.strMeal,
+      category: data.strCategory,
+      thumb: data.strMealThumb,
+    };
+    const result = await saveMeal(session.id, actionMeal);
 
     if(result.success) {
       const url = new URL(window.location.href)
-      url.searchParams.set("meal", JSON.stringify(result.saved))
+      url.searchParams.set("meal", JSON.stringify(result.meal))
       window.history.replaceState({}, "", url)
     } else {
       alert(result.message || "Something went wrong.");

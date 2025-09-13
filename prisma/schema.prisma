@@ -25,6 +25,8 @@ model Save {
   code        String
   meal        String
   userId      String
+  category    String
+  thumb       String
   user        User    @relation(references: [id], fields: [userId])
 }
 

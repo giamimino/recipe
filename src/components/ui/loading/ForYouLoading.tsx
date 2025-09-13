@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 export default function ForYouLoading() {
-  let length = 14
+  const [length, setLength] = useState(14)
   useEffect(() => {
     if(window.innerWidth <= 768) {
-      length = 8
+      setLength(7)
     }
   }, [])
   const placeholder = Array.from({ length })

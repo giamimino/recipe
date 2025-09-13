@@ -68,7 +68,7 @@ export default function All() {
 
     return () => {
       if (categoryFilterRef.current) {
-        observer.unobserve(categoryFilterRef.current)
+        observer.disconnect()
       }
     }
   }, [])

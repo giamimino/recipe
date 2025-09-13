@@ -37,7 +37,7 @@ export default function HomeCategory() {
 
     return () => {
       if(categortRef.current) {
-        observer.unobserve(categortRef.current)
+        observer.disconnect()
       }
     }
   }, [])

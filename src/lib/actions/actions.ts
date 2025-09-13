@@ -1,21 +1,28 @@
 "use server"
 import { prisma } from "../prisma";
 
-export async function saveMeal(userId: string, mealCode: string, meal: string) {
+export interface ActionMeal {
+  code: string
+  meal: string,
+  category: string,
+  thumb: string
+}
+
+export async function saveMeal(userId: string, meal: ActionMeal) {
   try {
-    if (!userId  && !mealCode && !meal)
+    if (!meal)
       return { success: false, message: "Something went wrong." };
 
     const saved = await prisma.save.create({
       data: {
-        meal,
-        code: mealCode,
+        meal: meal.meal,
+        code: meal.code,
+        category: meal.category,
+        thumb: meal.thumb,
         user: { connect: { id: userId } }
       },
       select: {
         id: true,
-        meal: true,
-        code: true,
       }
     })
 
@@ -24,7 +31,7 @@ export async function saveMeal(userId: string, mealCode: string, meal: string) {
 
     return {
       success: true,
-      saved
+      meal: (saved.id ? meal : {})
     }
   } catch (err) {
     console.log(err);

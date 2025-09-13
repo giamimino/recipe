@@ -26,7 +26,7 @@ export default function ForYou() {
        setLoading(false);
       }
       fetchData();
-  }, []);
+  }, [length]);
 
   if (loading) return <ForYouLoading />;
   return (

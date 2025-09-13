@@ -25,7 +25,7 @@ export default function Profile() {
   }
 
   return (
-    <div className='p-14 flex flex-col gap-2'>
+    <div className='p-14 max-[475px]:px-4 max-[475px]:pt-14 flex flex-col gap-2'>
       <div className='flex items-center gap-2.5'>
         <div>
           {session?.image && <Image
@@ -46,7 +46,7 @@ export default function Profile() {
         {session?.email ? (
           <>
             <Icon icon={'tabler:mail-filled'} />
-            <div className='flex gap-0.5 items-center'>
+            <div className='flex gap-0.5 items-center max-[475px]:flex-wrap'>
               <p>{session.email}</p>
               {session.emailVerified ? (
                 <p className='font-bold'>
@@ -64,29 +64,37 @@ export default function Profile() {
           </>
         ) : <TextLoading />}
       </div>
-      <div>
-        {session?.saves?.map((s) => (
-          <div
-            key={s.meal}
-          >
-            <div>
-              <Image
-                src={s.thumb} 
-                alt={''}
-                width={48}
-                height={48}
-              />
-              <div>
-                <h1>{s.meal}</h1>
-                <p>{s.category}</p>
+      {session?.saves && session?.saves?.length > 0 && (
+        <div className='flex flex-col gap-1'>
+          <h1 className='text-xl font-semibold'>Saves</h1>
+          <div className='flex flex-col gap-2 select-none'>
+            {session.saves.map((s) => (
+              <div
+                key={s.meal}
+                className='flex justify-between gap-5 hover:outline-none hover:ring-2 
+                hover:ring-offset-2 hover:ring-black-500 rounded-md cursor-pointer transition'
+              >
+                <div className='flex gap-2.5'>
+                  <Image
+                    src={`${s.thumb}/small`} 
+                    alt={s.meal ?? "meal-thumb"}
+                    width={48}
+                    height={48}
+                    className='rounded-xl'
+                  />
+                  <div className='flex flex-col'>
+                    <h1 className='font-medium text-black'>{s.meal}</h1>
+                    <p className='text-black/80 text-sm'>{s.category}</p>
+                  </div>
+                </div>
+                <button onClick={() => handleRemove(s.id)} className='text-red-600 cursor-pointer'>
+                  <Icon icon={'mdi:heart'} />
+                </button>
               </div>
-            </div>
-            <button onClick={() => handleRemove(s.id)}>
-              <Icon icon={'mdi:heart'} />
-            </button>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      )}
       <SignOutButton />
     </div>
   )

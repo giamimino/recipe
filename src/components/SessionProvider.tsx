@@ -27,6 +27,7 @@ export default function SessionProvider({
   useEffect(() => {
     if(pathname.startsWith("/meal/") || pathname.startsWith("/profile")) {
       const meal = searchParams.get("meal")
+      console.log(meal);
       const del = searchParams.get("del")
       if(meal) {
         setSession(prev => prev ? {
