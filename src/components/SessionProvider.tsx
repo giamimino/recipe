@@ -25,9 +25,9 @@ export default function SessionProvider({
   }, []);
 
   useEffect(() => {
-    if(pathname.startsWith("/meal/") || pathname.startsWith("/profile")) {
+    if(pathname.startsWith("/meal/") || pathname.startsWith("/profile") || pathname.startsWith("/verify")) {
       const meal = searchParams.get("meal")
-      console.log(meal);
+      const date = searchParams.get("date")
       const del = searchParams.get("del")
       if(meal) {
         setSession(prev => prev ? {
@@ -43,6 +43,11 @@ export default function SessionProvider({
           saves: prev.saves?.filter(
             (s) => s.id !== del
           )
+        } : prev)
+      } else if(date) {
+        setSession(prev => prev ? {
+          ...prev,
+          emailVerified: new Date(date)
         } : prev)
       }
       

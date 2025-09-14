@@ -5,12 +5,13 @@ import { SessionContext } from '@/context/SessionContext'
 import { removeSaveMeal } from '@/lib/actions/actions'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import Image from 'next/image'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useState } from 'react'
 
 export default function Profile() {
+  const [message, setMessage] = useState("")
   const session = useContext(SessionContext)
+  const router = useRouter()
   
   const handleRemove = async (id: string) => {
     const result = await removeSaveMeal(id)
@@ -21,6 +22,20 @@ export default function Profile() {
       window.history.replaceState({}, "", url)
     } else {
       alert(result.message || 'Something went wrong.')
+    }
+  }
+
+  const handleSend = async () => {
+    const res = await fetch("/api/register", {
+      method: "POST",
+      headers: { "Content-Type": "Application/json" },
+      body: JSON.stringify({ email: session?.email, userId: session?.id})
+    })
+    const result = await res.json()
+    if(result.success) {
+      setMessage(result.message ?? "Verification email sent.")
+    } else {
+      alert(result.message ?? "Something went wrong.")
     }
   }
 
@@ -53,17 +68,20 @@ export default function Profile() {
                   Verified!
                 </p>
               ) : (
-                <Link
-                  href={`/verification?m=${session.email}&id=${session.id}`}
+                <button
                   className='text-blue-500 underline hover:text-blue-600'
+                  onClick={() => handleSend()}
                 >
                   Verify your email
-                </Link>
+                </button>
               )}
             </div>
           </>
         ) : <TextLoading />}
       </div>
+      {message !== "" && (
+        <p>{message}</p>
+      )}
       {session?.saves && session?.saves?.length > 0 && (
         <div className='flex flex-col gap-1'>
           <h1 className='text-xl font-semibold'>Saves</h1>
