@@ -5,7 +5,6 @@ import { SessionContext } from '@/context/SessionContext'
 import { removeSaveMeal } from '@/lib/actions/actions'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 import React, { useContext, useState } from 'react'
 
 export default function Profile() {

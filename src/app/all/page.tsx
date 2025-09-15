@@ -3,7 +3,7 @@ import React, { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import ForYouLoading from '@/components/ui/loading/ForYouLoading'
 import Search from '@/components/ui/search'
 import { useDebounce } from '@/hooks/useDebounce'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import Meal from '@/components/ui/meal'
 import Category from '@/components/ui/category'
 
@@ -15,7 +15,6 @@ export default function All() {
   const [filter, setFilter] = useState<string[]>([])
   const [category, setCategory] = useState<MealCategory[]>([])
   const debouncedSearch = useDebounce(searchValue)
-  const paramSearch = useSearchParams()
   const router = useRouter()
   const categoryFilterRef = useRef<HTMLDivElement>(null)
   
@@ -75,7 +74,7 @@ export default function All() {
 
   const filteredMeals: Meal[] = useMemo(() => {
     let result = meals ?? []
-    const sv = paramSearch.get("s")
+    const sv = new URL(window.location.href).searchParams.get("s")
     if(filter.length >= 1 && meals.length >= 1) {
       result = result.filter(
         (m) => filter.includes(m.strCategory.toLowerCase())
