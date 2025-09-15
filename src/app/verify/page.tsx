@@ -4,13 +4,13 @@ import React, { useEffect, useMemo, useState } from 'react'
 export default function Verification() {
   const [loading, setLoading] = useState(true)
   const token = useMemo(() => {
-    const url = new URL(window.location.href)
-    const token = url.searchParams.get("token")
-    const id = url.searchParams.get("id")
-    return { token, id }
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href)
+      const token = url.searchParams.get("token")
+      const id = url.searchParams.get("id")
+      return { token, id }
+    }
   }, [])
-  console.log(token);
-  
 
   useEffect(() => {
     if(!token) return;
