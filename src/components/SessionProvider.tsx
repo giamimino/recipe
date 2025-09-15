@@ -1,7 +1,7 @@
 "use client";
 import { Session } from "@/app/api/session/route";
 import { SessionContext } from "@/context/SessionContext";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 export default function SessionProvider({
@@ -11,7 +11,6 @@ export default function SessionProvider({
 }>) {
   const [session, setSession] = useState<Session | null>(null);
   const pathname = usePathname()
-  const searchParams = useSearchParams()
   useEffect(() => {
     const fetchSession = async () => {
       const res = await fetch("/api/session")
@@ -26,9 +25,10 @@ export default function SessionProvider({
 
   useEffect(() => {
     if(pathname.startsWith("/meal/") || pathname.startsWith("/profile") || pathname.startsWith("/verify")) {
-      const meal = searchParams.get("meal")
-      const date = searchParams.get("date")
-      const del = searchParams.get("del")
+      const c = new URL(window.location.href)
+      const meal = c.searchParams.get("meal")
+      const date = c.searchParams.get("date")
+      const del = c.searchParams.get("del")
       if(meal) {
         setSession(prev => prev ? {
           ...prev,
@@ -56,6 +56,6 @@ export default function SessionProvider({
       url.searchParams.delete("del")
       window.history.replaceState({}, "", url.toString());
     }
-  }, [pathname, searchParams])
+  }, [pathname])
   return <SessionContext.Provider value={session}>{children}</SessionContext.Provider>;
 }
