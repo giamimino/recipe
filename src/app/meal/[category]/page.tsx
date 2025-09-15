@@ -22,12 +22,13 @@ export default function CategoryPage({ params }: PagePramas) {
   const router = useRouter()
 
   useEffect(() => {
+    if(!filterC) return;
     setLoading(true)
     fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${filterC}`)
       .then(res => res.json())
       .then(data => setMeals(data.meals))
     setLoading(false)
-  }, [])
+  }, [filterC])
 
   if(loading) return <div className='pt-18'><ForYouLoading /></div>
   return (

@@ -56,7 +56,7 @@ export default function All() {
       ([entry]) => {
         if (entry.isIntersecting) {
           getCategories()
-          observer.unobserve(entry.target)
+          observer.disconnect()
         }
       },
       { threshold: 0.3 }
@@ -67,10 +67,9 @@ export default function All() {
     }
 
     return () => {
-      if (categoryFilterRef.current) {
         observer.disconnect()
-      }
     }
+    
   }, [])
 
 

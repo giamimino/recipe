@@ -11,7 +11,6 @@ import React, { useContext, useState } from 'react'
 export default function Profile() {
   const [message, setMessage] = useState("")
   const session = useContext(SessionContext)
-  const router = useRouter()
   
   const handleRemove = async (id: string) => {
     const result = await removeSaveMeal(id)

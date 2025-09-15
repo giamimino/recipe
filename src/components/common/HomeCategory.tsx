@@ -25,7 +25,7 @@ export default function HomeCategory() {
       ([enter]) => {
         if(enter.isIntersecting) {
           fetchData()
-          observer.unobserve(enter.target)
+          observer.disconnect()
         }
       },
       { threshold: 0.3 }
@@ -36,9 +36,7 @@ export default function HomeCategory() {
     }
 
     return () => {
-      if(categortRef.current) {
         observer.disconnect()
-      }
     }
   }, [])
   return (
