@@ -95,7 +95,7 @@ export default function All() {
     }
 
     return result
-  }, [meals, debouncedSearch, filter])
+  }, [meals, debouncedSearch, filter, searchParam])
 
   function handleSearch(value: string) {
     fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${value.replace(" ", "+")}`)
