@@ -17,6 +17,14 @@ export default function All() {
   const debouncedSearch = useDebounce(searchValue)
   const router = useRouter()
   const categoryFilterRef = useRef<HTMLDivElement>(null)
+  const [searchParam, setSearchParam] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const sv = new URL(window.location.href).searchParams.get("s")
+      setSearchParam(sv)
+    }
+  }, [])
   
   useEffect(() => {
     const fetchData = async () => {
@@ -74,14 +82,13 @@ export default function All() {
 
   const filteredMeals: Meal[] = useMemo(() => {
     let result = meals ?? []
-    const sv = new URL(window.location.href).searchParams.get("s")
+    if (searchParam) {
+      result = result.filter((m) => m.strMeal.toLowerCase().includes(searchParam.toLowerCase()))
+    }
     if(filter.length >= 1 && meals.length >= 1) {
       result = result.filter(
         (m) => filter.includes(m.strCategory.toLowerCase())
       )
-    }
-    if(sv) {
-      result = result.filter((m) => m.strMeal.toLowerCase().includes(sv.toLowerCase()))
     }
     if(debouncedSearch.trim() !== "") {
       result = result.filter((m) => m.strMeal.toLowerCase().includes(debouncedSearch.toLowerCase()))
