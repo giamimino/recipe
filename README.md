@@ -9,7 +9,7 @@ I'm Gia (GitHub: `giamimino`) — a hands-on full-stack web developer who builds
 
 ---
 
-## Quick CV (copy-paste)
+## Quick CV
 **Gia Mimino** — Full-Stack Web Developer  
 **Tech:** TypeScript · Next.js · React · Prisma · Node.js · Vercel · Git · HTML/CSS  · NextAuth
 **Highlight:** Built and deployed a full-stack recipe application (Next.js + TypeScript + Prisma). Link: https://recipe-app-gia.vercel.app
