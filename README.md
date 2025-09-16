@@ -49,3 +49,6 @@ npm install
 # run dev server
 npm run dev
 # open http://localhost:3000
+```
+
+> 🛠️ Designed & developed with ❤️ by [Gia Mimino](https://github.com/giamimino)
