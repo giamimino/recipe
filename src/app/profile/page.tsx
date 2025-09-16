@@ -5,11 +5,13 @@ import { SessionContext } from '@/context/SessionContext'
 import { removeSaveMeal } from '@/lib/actions/actions'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import React, { useContext, useState } from 'react'
 
 export default function Profile() {
   const [message, setMessage] = useState("")
   const session = useContext(SessionContext)
+  const router = useRouter()
   
   const handleRemove = async (id: string) => {
     const result = await removeSaveMeal(id)
@@ -97,6 +99,7 @@ export default function Profile() {
                     width={48}
                     height={48}
                     className='rounded-xl'
+                    onClick={() => router.push(`/meal/${s.category.toLowerCase()}/${s.code}-${s.meal}`)}
                   />
                   <div className='flex flex-col'>
                     <h1 className='font-medium text-black'>{s.meal}</h1>
