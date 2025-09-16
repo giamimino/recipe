@@ -5,12 +5,12 @@
 ---
 
 ## About me
-I'm Gia (GitHub: `giamimino`) — a hands-on full-stack web developer who builds fast, accessible, and maintainable apps with modern TypeScript tooling. This repository contains a production-ready recipe web app built with Next.js and TypeScript. I focus on clean code, end-to-end developer experience, and delivering working demos.Oauth with NextAuth by Google & Github
+I'm Gia (GitHub: `giamimino`) — a hands-on full-stack web developer who builds fast, accessible, and maintainable apps with modern TypeScript tooling. This repository contains a production-ready recipe web app built with Next.js and TypeScript. I focus on clean code, end-to-end developer experience, and delivering working demos. Oauth with NextAuth by Google & Github
 
 ---
 
 ## Quick CV
-**Gia Mimino** — Full-Stack Web Developer  
+**Gia Mimino** — Full-Stack Web Developer
 **Tech:** TypeScript · Next.js · React · Prisma · Node.js · Vercel · Git · HTML/CSS  · NextAuth
 **Highlight:** Built and deployed a full-stack recipe application (Next.js + TypeScript + Prisma). Link: https://recipe-app-gia.vercel.app
 
